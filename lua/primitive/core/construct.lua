@@ -2369,6 +2369,48 @@ registerType( "wedge_corner", function( param, data, threaded, physics )
 end )
 
 
+-- PARALLELOGRAM
+registerType( "parallelogram", function( param, data, threaded, physics )
+    local dx = ( isvector( param.PrimSIZE ) and param.PrimSIZE[1] or 1 ) * 0.5
+    local dy = ( isvector( param.PrimSIZE ) and param.PrimSIZE[2] or 1 ) * 0.5
+    local dz = ( isvector( param.PrimSIZE ) and param.PrimSIZE[3] or 1 ) * 0.5
+
+    local slant = math_clamp( tonumber( param.PrimSLANT ) or 0, -89, 89 )
+    local shift = math_tan( math_rad( slant ) ) * dz * 2
+
+    local model = simpleton.New()
+    local verts = model.verts
+
+    -- Bottom face at z=-dz is unshifted; all horizontal offset goes to the top face.
+    -- The entity origin sits at the center of the bottom face.
+    model:PushXYZ(  dx,          dy, -dz )  -- 1 bottom y+ x+
+    model:PushXYZ(  dx,         -dy, -dz )  -- 2 bottom y- x+
+    model:PushXYZ( -dx,         -dy, -dz )  -- 3 bottom y- x-
+    model:PushXYZ( -dx,          dy, -dz )  -- 4 bottom y+ x-
+    model:PushXYZ(  dx + shift,  dy,  dz )  -- 5 top y+ x+
+    model:PushXYZ(  dx + shift, -dy,  dz )  -- 6 top y- x+
+    model:PushXYZ( -dx + shift, -dy,  dz )  -- 7 top y- x-
+    model:PushXYZ( -dx + shift,  dy,  dz )  -- 8 top y+ x-
+
+    if CLIENT then
+        model:PushFace( 1, 2, 3, 4 )  -- bottom (-z)
+        model:PushFace( 5, 8, 7, 6 )  -- top (+z)
+        model:PushFace( 1, 4, 8, 5 )  -- y+ side
+        model:PushFace( 2, 6, 7, 3 )  -- y- side
+        model:PushFace( 2, 1, 5, 6 )  -- x+ side (slanted)
+        model:PushFace( 4, 3, 7, 8 )  -- x- side (slanted)
+    end
+
+    if physics then
+        model.convexes = { verts }
+    end
+
+    util_Transform( verts, param.PrimMESHROT, param.PrimMESHPOS, threaded )
+
+    return model
+end )
+
+
 -- AIRFOIL
 local function NACA4DIGIT( distr, points, chord, M, P, T, openEdge, ox, oy, oz )
     ox = ox or 0

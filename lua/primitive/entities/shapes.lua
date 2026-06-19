@@ -2,7 +2,7 @@
 do
     local class = {}
 
-    local typen = { "cone", "cube", "cube_magic", "cube_hole", "cylinder", "dome", "plane", "pyramid", "sphere", "torus", "tube", "wedge", "wedge_corner" }
+    local typen = { "cone", "cube", "cube_magic", "cube_hole", "cylinder", "dome", "parallelogram", "plane", "pyramid", "sphere", "torus", "tube", "wedge", "wedge_corner" }
     local typek, defaults = {}, {}
 
     do
@@ -18,6 +18,7 @@ do
                 PrimNUMSEG = 16,
                 PrimSIDES = 0,
                 PrimSIZE = Vector( 48, 48, 48 ),
+                PrimSLANT = 0,
                 PrimSUBDIV = 8,
                 PrimTX = 0,
                 PrimTY = 0,
@@ -69,6 +70,12 @@ do
                 PrimSIZE = Vector( 48, 48, 48 ),
                 PrimSUBDIV = 8,
                 PrimTYPE = "dome",
+            },
+            parallelogram = {
+                PrimMESHSMOOTH = 0,
+                PrimSIZE = Vector( 48, 48, 48 ),
+                PrimSLANT = 0,
+                PrimTYPE = "parallelogram",
             },
             plane = {
                 PrimMESHSMOOTH = 0,
@@ -163,6 +170,7 @@ do
         self:PrimitiveVar( "PrimDT", "Float", { category = "modify", title = "thickness", panel = "float", min = 1, max = 1000 }, true )
         self:PrimitiveVar( "PrimTX", "Float", { category = "modify", title = "taper x", panel = "float", min = -1, max = 1 }, true )
         self:PrimitiveVar( "PrimTY", "Float", { category = "modify", title = "taper y", panel = "float", min = -1, max = 1 }, true )
+        self:PrimitiveVar( "PrimSLANT", "Float", { category = "modify", title = "slant angle", panel = "float", min = -80, max = 80 }, true )
 
         self:PrimitiveVar( "PrimSUBDIV", "Int", { category = "modify", title = "subdivide", panel = "int", min = 1, max = 32 }, true )
         self:PrimitiveVar( "PrimMAXSEG", "Int", { category = "modify", title = "max segments", panel = "int", min = 1, max = 32 }, true )
@@ -180,6 +188,7 @@ do
             { category = "shapes", entity = "primitive_shape", title = "cube_hole", command = "cube_hole 1 48" },
             { category = "shapes", entity = "primitive_shape", title = "cylinder", command = "cylinder 1 48" },
             { category = "shapes", entity = "primitive_shape", title = "dome", command = "dome 1 48" },
+            { category = "shapes", entity = "primitive_shape", title = "parallelogram", command = "parallelogram 1 48" },
             { category = "shapes", entity = "primitive_shape", title = "plane", command = "plane 1 48" },
             { category = "shapes", entity = "primitive_shape", title = "pyramid", command = "pyramid 1 48" },
             { category = "shapes", entity = "primitive_shape", title = "sphere", command = "sphere 1 48" },
