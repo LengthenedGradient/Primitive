@@ -270,7 +270,7 @@ do
             either a function or a coroutine that will build the mesh
     --]]
     function addon.construct.get( name, param, threaded, physics )
-        if param.PrimUNITS == "millimeters" then
+        if param and param.PrimUNITS == "millimeters" then
             param = table.Copy( param )
             if isvector( param.PrimSIZE ) then
                 local s = param.PrimSIZE * 0.03937
