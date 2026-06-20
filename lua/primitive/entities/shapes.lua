@@ -172,7 +172,7 @@ do
         self:PrimitiveVar( "PrimDT", "Float", { category = "modify", title = "thickness", panel = "float", min = 1, max = 1000 }, true )
         self:PrimitiveVar( "PrimTX", "Float", { category = "modify", title = "taper x", panel = "float", min = -1, max = 1 }, true )
         self:PrimitiveVar( "PrimTY", "Float", { category = "modify", title = "taper y", panel = "float", min = -1, max = 1 }, true )
-        self:PrimitiveVar( "PrimSLANT", "Float", { category = "modify", title = "slant angle", panel = "float", min = -80, max = 80 }, true )
+        self:PrimitiveVar( "PrimSLANT", "Float", { category = "modify", title = "overhang", panel = "float", min = -1000, max = 1000 }, true )
 
         self:PrimitiveVar( "PrimSUBDIV", "Int", { category = "modify", title = "subdivide", panel = "int", min = 1, max = 32 }, true )
         self:PrimitiveVar( "PrimMAXSEG", "Int", { category = "modify", title = "max segments", panel = "int", min = 1, max = 32 }, true )

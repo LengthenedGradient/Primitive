@@ -12,8 +12,8 @@ local addon = Primitive
 local bit, math, util, table, isvector, WorldToLocal, LocalToWorld, Vector, Angle =
       bit, math, util, table, isvector, WorldToLocal, LocalToWorld, Vector, Angle
 
-local math_abs, math_sin, math_cos, math_tan, math_asin, math_acos, math_atan, math_atan2, math_rad, math_deg, math_sqrt =
-      math.abs, math.sin, math.cos, math.tan, math.asin, math.acos, math.atan, math.atan2, math.rad, math.deg, math.sqrt
+local math_abs, math_sin, math_cos, math_asin, math_acos, math_atan, math_atan2, math_rad, math_deg, math_sqrt =
+      math.abs, math.sin, math.cos, math.asin, math.acos, math.atan, math.atan2, math.rad, math.deg, math.sqrt
 
 local math_ceil, math_floor, math_round, math_min, math_max, math_clamp =
       math.ceil, math.floor, math.Round, math.min, math.max, math.Clamp
@@ -277,6 +277,7 @@ do
                 param.PrimSIZE = Vector( math_max( s.x, 1 ), math_max( s.y, 1 ), math_max( s.z, 1 ) )
             end
             if isnumber( param.PrimDT ) then param.PrimDT = math_max( param.PrimDT * 0.03937, 1 ) end
+            if isnumber( param.PrimSLANT ) then param.PrimSLANT = param.PrimSLANT * 0.03937 end
         end
         return addon.construct.generate( construct_types[name], param, threaded, physics )
     end
@@ -2383,8 +2384,7 @@ registerType( "parallelogram", function( param, data, threaded, physics )
     local dy = ( isvector( param.PrimSIZE ) and param.PrimSIZE[2] or 1 ) * 0.5
     local dz = ( isvector( param.PrimSIZE ) and param.PrimSIZE[3] or 1 ) * 0.5
 
-    local slant = math_clamp( tonumber( param.PrimSLANT ) or 0, -89, 89 )
-    local shift = math_tan( math_rad( slant ) ) * dz * 2
+    local shift = tonumber( param.PrimSLANT ) or 0
 
     local model = simpleton.New()
     local verts = model.verts
