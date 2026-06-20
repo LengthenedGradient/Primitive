@@ -2,7 +2,7 @@
 do
     local class = {}
 
-    local typen = { "cone", "cube", "cube_magic", "cube_hole", "cylinder", "dome", "parallelogram", "plane", "pyramid", "sphere", "torus", "tube", "wedge", "wedge_corner" }
+    local typen = { "cone", "cube", "cube_magic", "cube_hole", "cylinder", "dome", "dome_hollow", "parallelogram", "plane", "pyramid", "sphere", "torus", "tube", "wedge", "wedge_corner" }
     local typek, unitk, defaults = {}, { source = "source", millimeters = "millimeters" }, {}
 
     do
@@ -71,6 +71,13 @@ do
                 PrimSIZE = Vector( 48, 48, 48 ),
                 PrimSUBDIV = 8,
                 PrimTYPE = "dome",
+            },
+            dome_hollow = {
+                PrimDT = 4,
+                PrimMESHSMOOTH = 65,
+                PrimSIZE = Vector( 48, 48, 48 ),
+                PrimSUBDIV = 8,
+                PrimTYPE = "dome_hollow",
             },
             parallelogram = {
                 PrimMESHSMOOTH = 0,
@@ -190,6 +197,7 @@ do
             { category = "shapes", entity = "primitive_shape", title = "cube_hole", command = "cube_hole 1 48" },
             { category = "shapes", entity = "primitive_shape", title = "cylinder", command = "cylinder 1 48" },
             { category = "shapes", entity = "primitive_shape", title = "dome", command = "dome 1 48" },
+            { category = "shapes", entity = "primitive_shape", title = "dome_hollow", command = "dome_hollow 1 48" },
             { category = "shapes", entity = "primitive_shape", title = "parallelogram", command = "parallelogram 1 48" },
             { category = "shapes", entity = "primitive_shape", title = "plane", command = "plane 1 48" },
             { category = "shapes", entity = "primitive_shape", title = "pyramid", command = "pyramid 1 48" },
